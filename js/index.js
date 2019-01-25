@@ -2333,6 +2333,7 @@ function setJSONDataLocationField(jsondata,val){
 if(val == 1){
   var my_list=document.getElementById("json-datalist");
 		my_list.innerHTML = div_data;
+	alert("div_data : "+div_data);
 }else if(val == 2){
 	var my_list=document.getElementById("json-datalist1");
 		my_list.innerHTML = div_data;
