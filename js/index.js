@@ -2241,8 +2241,8 @@ function validateValidMobileUser(){
 //************************************** MAPMYINDIA - START **********************************************//
 
 function attachQueryValues(val){
-alert("val : "+val);
-if(window.localStorage.getItem("MobileMapRole") == 'true') {
+//alert("val : "+val);
+//if(window.localStorage.getItem("MobileMapRole") == 'true') {
 var expFromLoc = document.getElementById("expFromLoc").value;
 var expToLoc = document.getElementById("expToLoc").value;
 var locationQuery = "";
@@ -2260,10 +2260,11 @@ if(val == 1){
 }
 
 }
-}
+// }
 
 function attachGoogleSearchBox(query,val){
 alert("attachGoogleSearchBox");
+
 	if(query.length == 5 ){
 
   j.ajax({
@@ -2294,16 +2295,17 @@ alert("attachGoogleSearchBox");
 }
 
 function getPlaceData(tokenType,accessToken,queryValue,val){
-	alert("tokenType,accessToken : "+tokenType + " " + accessToken);
+	//alert("tokenType,accessToken : "+tokenType + " " + accessToken);
 	var authorization = tokenType + " " + accessToken;
-
+	var tempurl = "https://cors-escape.herokuapp.com/https://atlas.mapmyindia.com/api/places/search/json?query="+queryValue+"&location=28.6321438802915%2C77.2173553802915";
+console.log("url :  "+tempurl);
 	console.log("authorization : "+authorization);
 
 
 var settings = {
   "async": true,
   "crossDomain": true,
-  "url": "https://cors-escape.herokuapp.com/https://atlas.mapmyindia.com/api/places/search/json?query="+queryValue+"&location=28.6321438802915%2C77.2173553802915",
+  "url": "https://atlas.mapmyindia.com/api/places/search/json?query="+queryValue+"&location=28.6321438802915%2C77.2173553802915",
   "method": "GET",
   "headers": {
   "authorization": authorization,
@@ -2312,6 +2314,7 @@ var settings = {
 }
 
 $.ajax(settings).done(function (response) {
+	alert("response")
 	setJSONDataLocationField(response,val);
 });
  
