@@ -3,9 +3,9 @@ var defaultPagePath='app/pages/';
 var headerMsg = "Expenzing";
 //var urlPath = 'http://1.255.255.36:13130/TnEV1_0AWeb/WebService/Login/'
 //var WebServicePath ='http://1.255.255.184:8085/NexstepWebService/mobileLinkResolver.service';
-var WebServicePath = 'http://live.nexstepapps.com:8284/NexstepWebService/mobileLinkResolver.service';
+//var WebServicePath = 'http://live.nexstepapps.com:8284/NexstepWebService/mobileLinkResolver.service';
 //var WebServicePath ='http://1.255.255.36:9898/NexstepWebService/mobileLinkResolver.service';
-//var WebServicePath ='http://1.255.255.98:8082/NexstepWebService/mobileLinkResolver.service';
+var WebServicePath ='http://1.255.255.98:8082/NexstepWebService/mobileLinkResolver.service';
 var clickedFlagCar = false;
 var clickedFlagTicket = false;
 var clickedFlagHotel = false;
@@ -2247,7 +2247,7 @@ function validateValidMobileUser(){
 
 function attachQueryValues(val){
 //alert("val : "+val);
-//if(window.localStorage.getItem("MobileMapRole") == 'true') {
+if(window.localStorage.getItem("MobileMapRole") == 'true') {
 var expFromLoc = document.getElementById("expFromLoc").value;
 var expToLoc = document.getElementById("expToLoc").value;
 var locationQuery = "";
@@ -2265,7 +2265,7 @@ if(val == 1){
 }
 
 }
-// }
+ }
 
 function attachGoogleSearchBox(query,val){
 //alert("attachGoogleSearchBox");
@@ -2302,7 +2302,7 @@ function attachGoogleSearchBox(query,val){
 function getPlaceData(tokenType,accessToken,queryValue,val){
 	//alert("tokenType,accessToken : "+tokenType + " " + accessToken);
 	var authorization = tokenType + " " + accessToken;
-	var tempurl = "https://atlas.mapmyindia.com/api/places/search/json?query="+queryValue+"&location=28.6321438802915%2C77.2173553802915";
+	var tempurl = "https://cors-escape.herokuapp.com/https://atlas.mapmyindia.com/api/places/search/json?query="+queryValue+"&location=28.6321438802915%2C77.2173553802915";
 console.log("url :  "+tempurl);
 	console.log("authorization : "+authorization);
 
@@ -2310,7 +2310,7 @@ console.log("url :  "+tempurl);
 var settings = {
   "async": true,
   "crossDomain": true,
-  "url": "https://atlas.mapmyindia.com/api/places/search/json?query="+queryValue+"&location=28.6321438802915%2C77.2173553802915",
+  "url": "https://cors-escape.herokuapp.com/https://atlas.mapmyindia.com/api/places/search/json?query="+queryValue+"&location=28.6321438802915%2C77.2173553802915",
   "method": "GET",
   "headers": {
   "authorization": authorization,
@@ -2319,7 +2319,6 @@ var settings = {
 }
 
 $.ajax(settings).done(function (response) {
-	alert("response")
 	setJSONDataLocationField(response,val);
 });
  
@@ -2348,51 +2347,48 @@ if(val == 1){
 
 if(val == 1){
  j("a").click(function(){
-    //alert("The paragraph was clicked.");
-    // alert(j(this).text());
      var value = j(this).text();
      var id = j(this).attr('id');
-    // alert(j(this).attr('id'));
+
       fromLocationWayPoint = id;
 document.getElementById("expFromLoc").value = value;
  document.getElementById('json-datalist').style.display="none";
        calulateUnitFromLoction();
   });
 
-/*  j("#expFromLoc").blur(function(){
-   document.getElementById('json-datalist').style.display="none";
-    
-  });*/
-
-   j("#expDate").click(function(){   
- document.getElementById('json-datalist').style.display="none";    
-  });
-
-     j("#accountHead").click(function(){   
- document.getElementById('json-datalist').style.display="none";    
-  });
-
-       j("#expenseName").click(function(){   
- document.getElementById('json-datalist').style.display="none";    
-  });
+hideDropDownContents();
 
 }else if(val == 2){
 	j("a").click(function(){
-    alert("The paragraph was clicked 2.");
-
-     alert(j(this).text());
+   
      var value = j(this).text();
      var id = j(this).attr('id');
-     alert(j(this).attr('id'));
+
      toLocationWayPoint = id;
 	document.getElementById("expToLoc").value = value;
 	document.getElementById('json-datalist1').style.display="none";
        calulateUnitFromLoction();
 
-
   });
+	hideDropDownContents();
+
 	}
       
+}
+
+function hideDropDownContents(){
+
+	 j("#expDate").click(function(){   
+ j(".dropdown-content").hide();
+  });
+
+         j("#expToLoc").click(function(){   
+ j(".dropdown-content").hide();   
+  });
+
+           j("#expFromLoc").click(function(){   
+ j(".dropdown-content").hide();  
+  });
 }
 
  function calulateUnitFromLoction(){
