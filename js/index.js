@@ -540,6 +540,7 @@ function createExpNameDropDown(jsonExpNameArr){
 			jsonExpArr.push({id: stateArr.ExpenseID,name: stateArr.ExpenseName});
 		}
 	}
+	$(".dropdown-content").hide();
 	document.getElementById("expFromLoc").value = "";
 	document.getElementById("expToLoc").value = "";
 	document.getElementById("expNarration").value = "";
@@ -547,6 +548,7 @@ function createExpNameDropDown(jsonExpNameArr){
 	document.getElementById("expAmt").value = "";
 	fromLocationWayPoint = "";
 	toLocationWayPoint = "";
+	
 
 	$("a").click(function () { 
 		$("#mapLink").fadeTo("fast").removeAttr("href"); 
@@ -1327,6 +1329,7 @@ function setPerUnitDetails(transaction, results){
 			document.getElementById("expNarration").value = "";
 			document.getElementById("expUnit").value = "";
 			document.getElementById("expAmt").value = "";
+			$(".dropdown-content").hide();
 			fromLocationWayPoint = "";
 			toLocationWayPoint = "";
 		    if(perUnitDetailsJSON.expenseIsfromAndToReqd=='N'){
@@ -1339,6 +1342,7 @@ function setPerUnitDetails(transaction, results){
 				document.getElementById("expNarration").disabled =false;
 				document.getElementById("expNarration").style.backgroundColor='#FFFFFF';
 				document.getElementById("mapImage").style.display= "none";
+				$(".dropdown-content").hide();
 				fromLocationWayPoint = "";
 				toLocationWayPoint = "";
 			}else{
@@ -1348,7 +1352,8 @@ function setPerUnitDetails(transaction, results){
 				document.getElementById("expToLoc").value="";
 				document.getElementById("expNarration").value="";
 				document.getElementById("expFromLoc").style.backgroundColor='#FFFFFF'; 
-				document.getElementById("expToLoc").style.backgroundColor='#FFFFFF'; 
+				document.getElementById("expToLoc").style.backgroundColor='#FFFFFF';
+				$(".dropdown-content").hide(); 
 				fromLocationWayPoint = "";
 				toLocationWayPoint = "";
 				//alert(window.localStorage.getItem("MobileMapRole"))
@@ -2263,7 +2268,7 @@ if(val == 1){
 // }
 
 function attachGoogleSearchBox(query,val){
-alert("attachGoogleSearchBox");
+//alert("attachGoogleSearchBox");
 
 	if(query.length == 5 ){
 
@@ -2297,7 +2302,7 @@ alert("attachGoogleSearchBox");
 function getPlaceData(tokenType,accessToken,queryValue,val){
 	//alert("tokenType,accessToken : "+tokenType + " " + accessToken);
 	var authorization = tokenType + " " + accessToken;
-	var tempurl = "https://cors-escape.herokuapp.com/https://atlas.mapmyindia.com/api/places/search/json?query="+queryValue+"&location=28.6321438802915%2C77.2173553802915";
+	var tempurl = "https://atlas.mapmyindia.com/api/places/search/json?query="+queryValue+"&location=28.6321438802915%2C77.2173553802915";
 console.log("url :  "+tempurl);
 	console.log("authorization : "+authorization);
 
@@ -2321,43 +2326,72 @@ $.ajax(settings).done(function (response) {
 }
 
 function setJSONDataLocationField(jsondata,val){
-	alert(JSON.stringify(jsondata));
+	//alert(JSON.stringify(jsondata));
  var div_data='';
 	 $.each(jsondata.suggestedLocations,function(i,obj){
 
-                div_data = div_data +"<option data-value="+obj.latitude+"$"+obj.longitude+" value='"+obj.placeName+'-'+obj.placeAddress+"'>"+obj.placeName+'-'+obj.placeAddress+"</option>"
+                div_data = div_data +"<a herf = '' id="+obj.latitude+"$"+obj.longitude+" value='"+obj.placeName+'-'+obj.placeAddress+"'>"+obj.placeName+'-'+obj.placeAddress+"</a>"
 
 
                 });  
 
 if(val == 1){
   var my_list=document.getElementById("json-datalist");
-		my_list.innerHTML = "<select>"+div_data+"</select>";
-	alert("div_data : "+my_list.innerHTML);
+		my_list.innerHTML = div_data;
+		//alert("div_data : "+div_data);
+		 document.getElementById('json-datalist').style.display="";
 }else if(val == 2){
 	var my_list=document.getElementById("json-datalist1");
-		my_list.innerHTML = "<select>"+div_data+"</select>";
+		my_list.innerHTML = div_data;
+		document.getElementById('json-datalist1').style.display="";
 }
 
+if(val == 1){
+ j("a").click(function(){
+    //alert("The paragraph was clicked.");
+    // alert(j(this).text());
+     var value = j(this).text();
+     var id = j(this).attr('id');
+    // alert(j(this).attr('id'));
+      fromLocationWayPoint = id;
+document.getElementById("expFromLoc").value = value;
+ document.getElementById('json-datalist').style.display="none";
+       calulateUnitFromLoction();
+  });
 
-        j("#expFromLoc").change(function () {
-			var value = j('#expFromLoc').val();
-     
-        fromLocationWayPoint = j('#json-datalist [value="' + value + '"]').data('value');
-        document.getElementById("expToLoc").focus();
-        calulateUnitFromLoction();
-        });
+/*  j("#expFromLoc").blur(function(){
+   document.getElementById('json-datalist').style.display="none";
+    
+  });*/
+
+   j("#expDate").click(function(){   
+ document.getElementById('json-datalist').style.display="none";    
+  });
+
+     j("#accountHead").click(function(){   
+ document.getElementById('json-datalist').style.display="none";    
+  });
+
+       j("#expenseName").click(function(){   
+ document.getElementById('json-datalist').style.display="none";    
+  });
+
+}else if(val == 2){
+	j("a").click(function(){
+    alert("The paragraph was clicked 2.");
+
+     alert(j(this).text());
+     var value = j(this).text();
+     var id = j(this).attr('id');
+     alert(j(this).attr('id'));
+     toLocationWayPoint = id;
+	document.getElementById("expToLoc").value = value;
+	document.getElementById('json-datalist1').style.display="none";
+       calulateUnitFromLoction();
 
 
-
-         j("#expToLoc").change(function () {
-           var value = j('#expToLoc').val();
-     
-        toLocationWayPoint = j('#json-datalist1 [value="' + value + '"]').data('value');
-        document.getElementById("expAmt").focus();
-         calulateUnitFromLoction();
-        });
-
+  });
+	}
       
 }
 
