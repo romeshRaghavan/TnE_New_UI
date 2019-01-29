@@ -767,7 +767,7 @@ div.image {
   /*  padding: 12px 16px;*/
     z-index: 1;
     overflow-y: scroll;
-    width: 270px;
+    width: auto;
     height: 150px;
 
 }
@@ -783,3 +783,11 @@ div.image {
 }
 
 .dropdown-content a:hover {background-color: #ddd;}
+
+/*#json-datalist{
+	    height: 100px;
+}
+*/
+
+
+ 
