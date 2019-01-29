@@ -3,9 +3,9 @@ var defaultPagePath='app/pages/';
 var headerMsg = "Expenzing";
 //var urlPath = 'http://1.255.255.36:13130/TnEV1_0AWeb/WebService/Login/'
 //var WebServicePath ='http://1.255.255.184:8085/NexstepWebService/mobileLinkResolver.service';
-//var WebServicePath = 'http://live.nexstepapps.com:8284/NexstepWebService/mobileLinkResolver.service';
+var WebServicePath = 'http://live.nexstepapps.com:8284/NexstepWebService/mobileLinkResolver.service';
 //var WebServicePath ='http://1.255.255.36:9898/NexstepWebService/mobileLinkResolver.service';
-var WebServicePath ='http://1.255.255.98:8082/NexstepWebService/mobileLinkResolver.service';
+//var WebServicePath ='http://1.255.255.98:8082/NexstepWebService/mobileLinkResolver.service';
 var clickedFlagCar = false;
 var clickedFlagTicket = false;
 var clickedFlagHotel = false;
@@ -2247,7 +2247,7 @@ function validateValidMobileUser(){
 
 function attachQueryValues(val){
 //alert("val : "+val);
-if(window.localStorage.getItem("MobileMapRole") == 'true') {
+//if(window.localStorage.getItem("MobileMapRole") == 'true') {
 var expFromLoc = document.getElementById("expFromLoc").value;
 var expToLoc = document.getElementById("expToLoc").value;
 var locationQuery = "";
@@ -2264,7 +2264,7 @@ if(val == 1){
 	 attachGoogleSearchBox(queryValue,val);	
 }
 
-}
+//}
  }
 
 function attachGoogleSearchBox(query,val){
