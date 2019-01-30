@@ -465,10 +465,12 @@ j.ajax({
 						j('#mainHeader').load(headerBackBtn);
 					 	j('#mainContainer').load(pageRefFailure);
 					 }else{
-						 j('#loading_Cat').hide();
+						j('#loading_Cat').hide();
+						requestRunning = false;
 						successMessage = "Oops!! Something went wrong. Please contact system administrator.";
 						j('#mainHeader').load(headerBackBtn);
 					 	j('#mainContainer').load(pageRefFailure);
+
 					 }
 					},
 				  error:function(data) {
@@ -1359,8 +1361,10 @@ function setPerUnitDetails(transaction, results){
 				//alert(window.localStorage.getItem("MobileMapRole"))
 				if(window.localStorage.getItem("MobileMapRole") == 'true') 
 				{
-					//attachGoogleSearchBox(document.getElementById("expFromLoc"));
-					//attachGoogleSearchBox(document.getElementById("expToLoc"));
+					if(window.localStorage.getItem("MapProvider") == "GOOGLEMAP"){
+					attachGoogleSearchBox(document.getElementById("expFromLoc"));
+					attachGoogleSearchBox(document.getElementById("expToLoc"));
+					}
 					document.getElementById("mapImage").style.display="";
 					document.getElementById("expNarration").disabled =true;
 					document.getElementById("expNarration").style.backgroundColor='#d1d1d1';
@@ -2243,11 +2247,31 @@ function validateValidMobileUser(){
 	}
 }
 
+
+function attachGoogleSearchBox(component){
+	alert("attachGoogleSearchBox : "+window.localStorage.getItem("MapProvider"));
+	//alert("component   "+component.id)
+	var searchBox = new google.maps.places.SearchBox(component);
+	searchBox.addListener("places_changed", function(){
+		//alert("here")
+		fromLoc = document.getElementById("expFromLoc").value;
+		toLoc = document.getElementById("expToLoc").value;
+			if(fromLoc.value!='' && toLoc.value!=''){
+				wayPoint = document.getElementById("wayPointunitValue");
+				wayPoint.value='';
+				calculateAndDisplayRoute();
+				$("a").click(function () { 
+					$(this).fadeIn("fast").attr("href", "#openModal"); 
+				});
+			}
+	});
+}
+
+
 //************************************** MAPMYINDIA - START **********************************************//
 
 function attachQueryValues(val){
-//alert("val : "+val);
-if(window.localStorage.getItem("MobileMapRole") == 'true') {
+if(window.localStorage.getItem("MobileMapRole") == 'true' && window.localStorage.getItem("MapProvider") == "MAPMYINDIA") {
 var expFromLoc = document.getElementById("expFromLoc").value;
 var expToLoc = document.getElementById("expToLoc").value;
 var locationQuery = "";
@@ -2257,17 +2281,17 @@ var queryValue =  "";
 if(val == 1){
 	 locationQuery = document.getElementById("expFromLoc").value;
 	 queryValue = locationQuery;
-	 attachGoogleSearchBox(queryValue,val);
+	 attachMapMyIndiaSearchBox(queryValue,val);
 }else if(val == 2){
 	 locationQuery = document.getElementById("expToLoc").value;
 	 queryValue = locationQuery;
-	 attachGoogleSearchBox(queryValue,val);	
+	 attachMapMyIndiaSearchBox(queryValue,val);	
 }
 
 }
  }
 
-function attachGoogleSearchBox(query,val){
+function attachMapMyIndiaSearchBox(query,val){
 //alert("attachGoogleSearchBox");
 
 	if(query.length == 5 ){
@@ -2310,7 +2334,7 @@ console.log("url :  "+tempurl);
 var settings = {
   "async": true,
   "crossDomain": true,
-  "url": "https://atlas.mapmyindia.com/api/places/search/json?query="+queryValue+"&location=28.6321438802915%2C77.2173553802915",
+  "url": "https://cors-escape.herokuapp.com/https://atlas.mapmyindia.com/api/places/search/json?query="+queryValue+"&location=28.6321438802915%2C77.2173553802915",
   "method": "GET",
   "headers": {
   "authorization": authorization,
@@ -3105,6 +3129,7 @@ j.ajax({
 						successMessage = "Oops!! Something went wrong. Please contact system administrator.";
 						j('#mainHeader').load(headerBackBtn);
 					 	j('#mainContainer').load(pageRefFailure);
+					 	requestRunning = false;
 					 }
 					},
 				  error:function(data) {
