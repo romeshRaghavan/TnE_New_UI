@@ -3,9 +3,9 @@ var defaultPagePath='app/pages/';
 var headerMsg = "Expenzing";
 //var urlPath = 'http://1.255.255.36:13130/TnEV1_0AWeb/WebService/Login/'
 //var WebServicePath ='http://1.255.255.184:8085/NexstepWebService/mobileLinkResolver.service';
-//var WebServicePath = 'http://live.nexstepapps.com:8284/NexstepWebService/mobileLinkResolver.service';
+var WebServicePath = 'http://live.nexstepapps.com:8284/NexstepWebService/mobileLinkResolver.service';
 //var WebServicePath ='http://1.255.255.36:9898/NexstepWebService/mobileLinkResolver.service';
-var WebServicePath ='http://1.255.255.98:8082/NexstepWebService/mobileLinkResolver.service';
+//var WebServicePath ='http://1.255.255.98:8082/NexstepWebService/mobileLinkResolver.service';
 var clickedFlagCar = false;
 var clickedFlagTicket = false;
 var clickedFlagHotel = false;
@@ -2250,7 +2250,7 @@ function validateValidMobileUser(){
 
 function attachGoogleSearchBox(component){
 	alert("attachGoogleSearchBox : "+window.localStorage.getItem("MapProvider"));
-	//alert("component   "+component.id)
+	if(window.localStorage.getItem("MapProvider") == "GOOGLEMAP"){
 	var searchBox = new google.maps.places.SearchBox(component);
 	searchBox.addListener("places_changed", function(){
 		//alert("here")
@@ -2266,6 +2266,7 @@ function attachGoogleSearchBox(component){
 			}
 	});
 }
+}
 
 
 //************************************** MAPMYINDIA - START **********************************************//
@@ -2276,7 +2277,6 @@ var expFromLoc = document.getElementById("expFromLoc").value;
 var expToLoc = document.getElementById("expToLoc").value;
 var locationQuery = "";
 var queryValue =  "";
-
 
 if(val == 1){
 	 locationQuery = document.getElementById("expFromLoc").value;
@@ -2334,7 +2334,7 @@ console.log("url :  "+tempurl);
 var settings = {
   "async": true,
   "crossDomain": true,
-  "url": "https://atlas.mapmyindia.com/api/places/search/json?query="+queryValue+"&location=28.6321438802915%2C77.2173553802915",
+  "url": "https://cors-escape.herokuapp.com/https://atlas.mapmyindia.com/api/places/search/json?query="+queryValue+"&location=28.6321438802915%2C77.2173553802915",
   "method": "GET",
   "headers": {
   "authorization": authorization,
@@ -2370,7 +2370,7 @@ if(val == 1){
 }
 
 if(val == 1){
- j("a").click(function(){
+ j("#json-datalist a").click(function(){
      var value = j(this).text();
      var id = j(this).attr('id');
 
@@ -2383,7 +2383,7 @@ document.getElementById("expFromLoc").value = value;
 hideDropDownContents();
 
 }else if(val == 2){
-	j("a").click(function(){
+	j("#json-datalist1 a").click(function(){
    
      var value = j(this).text();
      var id = j(this).attr('id');
@@ -2473,6 +2473,7 @@ function setUnitBasedOnResponse(response){
 //************************************** MAPMYINDIA - END **********************************************//
 
 function viewMap(){
+	if(window.localStorage.getItem("MapProvider") == "GOOGLEMAP"){
 		document.getElementById("openModal").style.display="block";
 		fromLoc = document.getElementById("expFromLoc");
 		toLoc = document.getElementById("expToLoc");
@@ -2481,11 +2482,11 @@ function viewMap(){
 		if(fromLoc.value!='' && toLoc.value!=''){
 			calculateAndDisplayRoute();
 			document.getElementById("mapImage").setAttribute('disabled', false);
+			}
 		}
 	}	
 	
 function calculateAndDisplayRoute() {
-		//alert("calculateAndDisplayRoute")
 		var map;
 		var directionsDisplay;
 		var directionsService;
@@ -2592,14 +2593,13 @@ function returnUnitResult(){
 function loadImage()
 {
 	//alert(window.localStorage.getItem("MobileMapRole"))
-	if(window.localStorage.getItem("MobileMapRole") == 'true')
-	{
+
 		document.getElementById("mapImage").style.display="";
 		//document.getElementById("mapLink").style.visibility = "hidden";
 		$("a").click(function () { 
 			$(this).fadeTo("fast").removeAttr("href"); 
 		});
-	}
+	
 }
 
 function resetUnit()
