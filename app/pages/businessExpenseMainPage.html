@@ -12,11 +12,11 @@
 </script>
 <div class="deals">
     <div class="sap_tabs">
-         <div id="horizontalTab" style="style= display: block;width:100%;margin: 0px;padding-top: 24px;">
+         <div id="horizontalTab" style="style= display: block;">
                <ul id="tab" class="resp-tabs-list" style="style= width:100%;">
-         <li lang="en" class="active" class="resp-tab-item resp-tab-active" aria-controls="tab_item-0" role="tab" onclick ="addHeader();"> Business Expense</li>
-                <li lang="en" id ="CategoryEAId" class="resp-tab-item " aria-controls="tab_item-1" role="tab" onclick ="addHeader();"> Employee Advance</li>
-         <li lang="en" class="resp-tab-item" aria-controls="tab_item-2" role="tab" onclick ="fetchBusiEmpAdv();" >Sync</li>
+         <li lang="en" class="active" class="resp-tab-item resp-tab-active" aria-controls="tab_item-0" role="tab" onclick ="addHeader();"> Add Expense</li>
+                <li lang="en" id ="CategoryEAId" class="resp-tab-item " aria-controls="tab_item-1" role="tab" onclick ="addHeader();"> Request Advance</li>
+         <li lang="en" class="resp-tab-item" aria-controls="tab_item-2" role="tab" onclick ="fetchBusiEmpAdv();" >Submit Expense</li>
                 </ul>            
         <div class="resp-tabs-container">
                     
@@ -26,7 +26,7 @@
           <div class="col-lg-12 clearfix addanexpense">
             <h1 lang="en">Add Business Expense</h1>
             <div class="expenseform clearfix" data-role="page" id="page1">
-              <ul style="padding-left: 25px;padding-right: 25px;">
+              <ul style="">
                 <li>
                   <div role="main" class="ui-content">
                     <input lang="en" id="expDate" type="text" class="span2 dp1" placeholder="Date" readonly="readonly">
@@ -91,9 +91,9 @@
             <div lang="en" style="display:none" id="displayText" class="displayTextCSS">
                Expenses added successfully.
            </div>
-       <div style="text-align:center;">
-            <button lang="en" class="btn btn-primary btn-lg " style="width: 40%;padding-top: 13px;padding-bottom: 13px;" onclick="saveBusinessDetails(0);">Save &amp; New</button>
-            <button lang="en" class="btn btn-primary btn-lg " style="width: 40%" onclick="saveBusinessDetails(1);">Save &amp; Go to Sync</button>
+       <div class="savesyncwrapper">
+            <button lang="en" class="btn btn-primary btn-lg expbusinessbtn" style="" onclick="saveBusinessDetails(0);">Save &amp; Add New</button>
+            <button lang="en" class="btn btn-primary btn-lg expbusinessbtnsync" style="" onclick="saveBusinessDetails(1);">Save &amp; Submit</button>
       </div>
           </div>
         </div>
@@ -151,7 +151,7 @@ var currentYear;
           <div class="col-lg-12 clearfix addanexpense">
             <h1 lang="en">Add Advance Request</h1>
             <div class="expenseform clearfix" data-role="page" id="page1">
-             <ul  style="padding-left: 32px;padding-right: 32px;">
+             <ul  style="">
               <li>
                   <div role="main" class="ui-content">
                     <input lang="en" id="empAdvDate" type="text" class="span2 dp1" placeholder="Date" readonly="readonly" style="text-align:left;">
@@ -183,8 +183,8 @@ var currentYear;
             <br>
           <div class="col-lg-12 clearfix expsync">
         <div class="row form-group">
-              <div class="col-lg-12">
-                <button lang="en" class="btn btn-primary btn-lg btn-block" style=" width: 40%;padding-top: 8px;padding-bottom: 8px;" onclick="syncSubmitEmpAdvance();">Send for Approval</button>
+              <div class="col-lg-12 savesyncwrapper">
+                <button lang="en" class="btn btn-primary btn-lg btn-block expbusinessbtnsingle" style="" onclick="syncSubmitEmpAdvance();">Send for Approval</button>
               </div>
             </div>
           </div>
@@ -234,30 +234,29 @@ var currentYear;
                     <div class="tab-1 resp-tab-content" aria-labelledby="tab_item-2">
                         <div>
   <div id="helpimage" class="Row">
-     <div class="Cell" >
-    <font face="verdana" size="1" color="green" style=" font-size: small;color: navy;"></font>
-    <img src="images/Employee_advance_part1.png" style="height: 80%;width: 95%;text-align: -webkit-center;">
-    </div>
+     <!--<div class="Cell" >
+      <font face="verdana" size="1" color="green" style=" font-size: small;color: navy;"></font>
+      <img src="images/Employee_advance_part1.png" style="height: 80%;width: 95%;text-align: -webkit-center;">
+    </div>-->
   </div>
 <div id = "BE" class="modal-body clearfix">
-    <div class="row"  style="padding-left: 20px;padding-right: 20px;">
+    <div class="row"  style="">
     <div class="col-lg-12 clearfix allexpebtn" id="box">
-    <h1 lang="en">View Business Expense</h1>
+        <h1 lang="en">Select Business Expense</h1>
     </div>
-          <div class="col-lg-12 clearfix expsync">
-            <div  style="display:none" id="displayError" class="displayTextError">
-              <span lang="en" id="errorMsg"></span> 
-           </div>
-          <div class="form-group">
-      </div>
-          </div>
+    <div class="col-lg-12 clearfix expsync">
+      <div  style="display:none" id="displayError" class="displayTextError">
+        <span lang="en" id="errorMsg"></span> 
+     </div>
+    <div class="form-group"></div>
+    </div>
     </div>
 </div>
 <div id = "EA" style="display: none">
         <div class="col-lg-12 clearfix allexpebtn">
     <h1 lang="en" >Settle Employee Advance</h1>
     </div>
-   <div class="expenseform clearfix" data-role="page" id=""  style="padding-left: 32px;padding-right: 32px;">
+   <div class="expenseform clearfix" data-role="page" id=""  style="">
        <table>
             <tr>
                 <td><label><font lang="en" face="verdana" color="gray" size="2.77">Total Expense Amount :</font></label></td>
@@ -282,7 +281,7 @@ var currentYear;
      </table>   
     </div>
 <div class="modal-body clearfix">
-    <div class="row" style="padding-left: 20px;padding-right: 20px;">
+    <div class="row" style="">
     <div class="col-lg-12 clearfix allexpebtn" id="box1">
     <h1 lang="en">Select Your Advances </h1>
     </div>
