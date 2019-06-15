@@ -8,7 +8,7 @@
     <author email="tech@expenzing.com" href="http://www.expenzing.com">
         Team Expenzing
     </author> 
-    <content src="index.html" />
+     <content src="index.html" />
     <preference name="permissions" value="none" />
     <preference name="orientation" value="portrait" />
     <preference name="target-device" value="universal" />
@@ -55,7 +55,7 @@
     <gap:plugin name="cordova-plugin-network-information" source="npm" />
     <gap:plugin name="cordova-plugin-splashscreen" source="npm" />
     <gap:plugin name="cordova-plugin-vibration" source="npm" />
-	<gap:plugin name="cordova-plugin-imagepicker" source="npm"/> -->
+    <gap:plugin name="cordova-plugin-imagepicker" source="npm"/> -->
     
     
     <gap:plugin name="cordova-plugin-battery-status" source="npm" />
@@ -65,11 +65,11 @@
     <gap:plugin name="cordova-plugin-console" source="npm" />
     <gap:plugin name="cordova-plugin-contacts" source="npm" />
     <gap:plugin name="cordova-plugin-device" source="npm" />
-    <gap:plugin name="cordova-plugin-device-motion" source="npm" />
-    <gap:plugin name="cordova-plugin-device-orientation" source="npm" />
+    <!--<gap:plugin name="cordova-plugin-device-motion" source="npm" />-->
+    <!--<gap:plugin name="cordova-plugin-device-orientation" source="npm" />-->
     <gap:plugin name="cordova-plugin-dialogs" source="npm" />
     <gap:plugin name="cordova-plugin-file" source="npm" spec="~4.1.1"/>
-    <gap:plugin name="cordova-plugin-file-transfer" source="npm" spec="~1.5.0"/>
+   <!-- <gap:plugin name="cordova-plugin-file-transfer" source="npm" spec="~1.5.0"/>-->
     <gap:plugin name="cordova-plugin-geolocation" source="npm" />
     <gap:plugin name="cordova-plugin-globalization" source="npm" />
     <gap:plugin name="cordova-plugin-inappbrowser" source="npm" />
@@ -83,7 +83,7 @@
     <!-- <plugin name="File" value="CDVFile" />-->
     <!-- <plugin name="FileTransfer" value="CDVFileTransfer" />
     icon src="/icon.png" gap:role="default"/> -->
-	
+    
     <icon src="icon.png" />
     <!--<icon gap:platform="android" gap:qualifier="ldpi" src="www/res/icon/android/icon-36-ldpi.png" />
     <icon gap:platform="android" gap:qualifier="mdpi" src="www/res/icon/android/icon-48-mdpi.png" />
@@ -92,7 +92,7 @@
     <icon gap:platform="blackberry" src="www/res/icon/blackberry/icon-80.png" />
     <icon gap:platform="blackberry" gap:state="hover" src="www/res/icon/blackberry/icon-80.png" />-->
     <icon gap:platform="ios" height="57" src="res/icon/ios/icon-57.png" width="57" />
-    <icon gap:platform="ios" height="72" src="res/icon/ios/icon-72.png" width="72" />
+    <!--<icon gap:platform="ios" height="72" src="res/icon/ios/icon-72.png" width="72" />-->
     <icon gap:platform="ios" height="120" src="res/icon/ios/icon-120.png" width="120" />
     <icon gap:platform="ios" height="76" src="res/icon/ios/icon-76.png" width="76" />
     <icon gap:platform="ios" height="152" src="res/icon/ios/icon-152.png" width="152" />
