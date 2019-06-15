@@ -12,7 +12,7 @@
 </script>
 <div class="deals">
     <div class="sap_tabs">	
-         <div id="horizontalTab" style="style= display: block;">
+         <div id="horizontalTab" style="style= display: block;width: 100%;margin: 0px;padding-top: 24px;">
                <ul class="resp-tabs-list">
 				 <li lang="en" class="active" class="resp-tab-item resp-tab-active" aria-controls="tab_item-0" role="tab" onclick ="addHeader();"> Travel Request</li>
                  <li lang="en" class="resp-tab-item " aria-controls="tab_item-1" role="tab" onclick="addHeader();">Travel Expense</li>
@@ -22,7 +22,7 @@
                     
     <div class="tab-1 resp-tab-content" aria-labelledby="tab_item-0">
 <div class="modal-body clearfix">
-        <div class="row" style="">
+        <div class="row" style="padding-left: 25px;padding-right: 25px;">
           <div class="col-lg-12 clearfix addanexpense">
             <h1 lang="en" >Add Travel Request</h1>
             <div class="expenseform clearfix" data-role="page" id="page1">
@@ -158,8 +158,8 @@
 		  <div ></div>
           <div class="col-lg-12 clearfix expsync">
 		    <div class="row form-group">
-              <div class="col-lg-12 savesyncwrapper" style="padding-top: 22px;">
-                <button lang="en" class="btn btn-primary btn-lg btn-block expbusinessbtnsingle" onclick="syncSubmitTravelDetails();">Send for Approval</button>
+              <div class="col-lg-12" style="padding-top: 22px;">
+                <button lang="en" class="btn btn-primary btn-lg btn-block" onclick="syncSubmitTravelDetails();">Send for Approval</button>
               </div>
             </div>
           </div>
@@ -200,7 +200,7 @@
 </div>
 <div class="tab-1 resp-tab-content" aria-labelledby="tab_item-1">
      <div class="modal-body clearfix">
-        <div class="row" style="">
+        <div class="row" style="padding-left: 25px;padding-right: 25px;">
           <div class="col-lg-12 clearfix addanexpense">
             <h1 lang="en">Add Travel Expense</h1>
             <div class="expenseform clearfix" data-role="page" id="page1">
@@ -208,8 +208,8 @@
                 <li>
              <input  lang="en" placeholder="Travel Request Number" id="travelRequestName" type="hidden" style="width: 98%">
                     <br><br>
-				   <p><font lang="en" face="verdana" size="0.8" color="green">Start Dt.</font><label for="startDate" style="width: 34%"  />
-				    <font lang="en" face="verdana" size="0.8" color="green">End Dt.</font><label for="endDate" style="width: 34%"/></p>
+				   <p><font lang="en" face="verdana" size="0.8" color="green">Start Dt.</font><label for="startDate" style="width: 38%"  />
+				    <font lang="en" face="verdana" size="0.8" color="green">End Dt.</font><label for="endDate" style="width: 38%"/></p>
 				</li>
 				<li>
                   <div role="main" class="ui-content">
@@ -254,10 +254,11 @@
               </ul>
             </div>
           </div>
-		  <div class="savesyncwrapper">
-            <button lang="en" class="btn btn-primary btn-lg expbusinessbtn" style="" onclick="saveTravelSettleDetails(0);">Save &amp; New</button>
-            <button  lang="en" class="btn btn-primary btn-lg expbusinessbtnsync" style="" onclick="saveTravelSettleDetails(1);">Save &amp; Go to Sync</button>
+		  <div style="text-align:center;">
+            <button lang="en" class="btn btn-primary btn-lg " style="width: 40%;height: 44px;" onclick="saveTravelSettleDetails(0);">Save &amp; New</button>
+            <button  lang="en" class="btn btn-primary btn-lg " style="width: 40%" onclick="saveTravelSettleDetails(1);">Save &amp; Go to Sync</button>
 		  </div>
+         
         </div>
     </div>
 	  <script>
@@ -297,7 +298,7 @@
     <div class="tab-1 resp-tab-content" aria-labelledby="tab_item-2">
 
 <div class="modal-body clearfix">
-        <div class="row" style="">
+        <div class="row" style="padding-left: 25px;padding-right: 25px;">
 		<div class="col-lg-12 clearfix allexpebtn" id="box">
 		<h1 lang="en" >View Travel Expense</h1>
 		</div>
