@@ -5,7 +5,7 @@ var headerMsg = "Expenzing";
 //var WebServicePath ='http://1.255.255.184:8085/NexstepWebService/mobileLinkResolver.service';
 var WebServicePath = 'http://live.nexstepapps.com:8284/NexstepWebService/mobileLinkResolver.service';
 //var WebServicePath ='http://1.255.255.36:9898/NexstepWebService/mobileLinkResolver.service';
-//var WebServicePath ='http://1.255.255.170:8085/NexstepWebService/mobileLinkResolver.service';
+//var WebServicePath ='http://1.255.255.197:8082/NexstepWebService/mobileLinkResolver.service';
 var clickedFlagCar = false;
 var clickedFlagTicket = false;
 var clickedFlagHotel = false;
@@ -34,8 +34,6 @@ var smsToExpenseStr = "" ;
 var smsWatchFlagStatus = false;
 var expensePageFlag = '';		//S for smsExpenses And N for normal expenses
 var filtersStr = "";
-var fromLocationWayPoint = "";
-var toLocationWayPoint = "";
 j(document).ready(function(){ 
 document.addEventListener("deviceready",loaded,false);
 });
@@ -465,12 +463,10 @@ j.ajax({
 						j('#mainHeader').load(headerBackBtn);
 					 	j('#mainContainer').load(pageRefFailure);
 					 }else{
-						j('#loading_Cat').hide();
-						requestRunning = false;
+						 j('#loading_Cat').hide();
 						successMessage = "Oops!! Something went wrong. Please contact system administrator.";
 						j('#mainHeader').load(headerBackBtn);
 					 	j('#mainContainer').load(pageRefFailure);
-
 					 }
 					},
 				  error:function(data) {
@@ -542,16 +538,12 @@ function createExpNameDropDown(jsonExpNameArr){
 			jsonExpArr.push({id: stateArr.ExpenseID,name: stateArr.ExpenseName});
 		}
 	}
-	$(".dropdown-content").hide();
+	
 	document.getElementById("expFromLoc").value = "";
 	document.getElementById("expToLoc").value = "";
 	document.getElementById("expNarration").value = "";
 	document.getElementById("expUnit").value = "";
 	document.getElementById("expAmt").value = "";
-	fromLocationWayPoint = "";
-	toLocationWayPoint = "";
-	
-
 	$("a").click(function () { 
 		$("#mapLink").fadeTo("fast").removeAttr("href"); 
 	});
@@ -1312,6 +1304,7 @@ function onloadTimePicker(){
 
 
 function setPerUnitDetails(transaction, results){
+ 		 
 	if(results!=null){
 		    var row = results.rows.item(0);
 		    perUnitDetailsJSON["expenseIsfromAndToReqd"]=row.expIsFromToReq;
@@ -1331,9 +1324,6 @@ function setPerUnitDetails(transaction, results){
 			document.getElementById("expNarration").value = "";
 			document.getElementById("expUnit").value = "";
 			document.getElementById("expAmt").value = "";
-			$(".dropdown-content").hide();
-			fromLocationWayPoint = "";
-			toLocationWayPoint = "";
 		    if(perUnitDetailsJSON.expenseIsfromAndToReqd=='N'){
 				document.getElementById("expFromLoc").value="";
 				document.getElementById("expToLoc").value="";
@@ -1344,9 +1334,6 @@ function setPerUnitDetails(transaction, results){
 				document.getElementById("expNarration").disabled =false;
 				document.getElementById("expNarration").style.backgroundColor='#FFFFFF';
 				document.getElementById("mapImage").style.display= "none";
-				$(".dropdown-content").hide();
-				fromLocationWayPoint = "";
-				toLocationWayPoint = "";
 			}else{
 				document.getElementById("expFromLoc").disabled =false;
 				document.getElementById("expToLoc").disabled =false;
@@ -1354,17 +1341,12 @@ function setPerUnitDetails(transaction, results){
 				document.getElementById("expToLoc").value="";
 				document.getElementById("expNarration").value="";
 				document.getElementById("expFromLoc").style.backgroundColor='#FFFFFF'; 
-				document.getElementById("expToLoc").style.backgroundColor='#FFFFFF';
-				$(".dropdown-content").hide(); 
-				fromLocationWayPoint = "";
-				toLocationWayPoint = "";
+				document.getElementById("expToLoc").style.backgroundColor='#FFFFFF'; 
 				//alert(window.localStorage.getItem("MobileMapRole"))
 				if(window.localStorage.getItem("MobileMapRole") == 'true') 
 				{
-					if(window.localStorage.getItem("MapProvider") == "GOOGLEMAP"){
 					attachGoogleSearchBox(document.getElementById("expFromLoc"));
 					attachGoogleSearchBox(document.getElementById("expToLoc"));
-					}
 					document.getElementById("mapImage").style.display="";
 					document.getElementById("expNarration").disabled =true;
 					document.getElementById("expNarration").style.backgroundColor='#d1d1d1';
@@ -2247,10 +2229,9 @@ function validateValidMobileUser(){
 	}
 }
 
-
 function attachGoogleSearchBox(component){
-	alert("attachGoogleSearchBox : "+window.localStorage.getItem("MapProvider"));
-	if(window.localStorage.getItem("MapProvider") == "GOOGLEMAP"){
+	//alert("attachGoogleSearchBox")
+	//alert("component   "+component.id)
 	var searchBox = new google.maps.places.SearchBox(component);
 	searchBox.addListener("places_changed", function(){
 		//alert("here")
@@ -2266,214 +2247,8 @@ function attachGoogleSearchBox(component){
 			}
 	});
 }
-}
-
-
-//************************************** MAPMYINDIA - START **********************************************//
-
-function attachQueryValues(val){
-if(window.localStorage.getItem("MobileMapRole") == 'true' && window.localStorage.getItem("MapProvider") == "MAPMYINDIA") {
-var expFromLoc = document.getElementById("expFromLoc").value;
-var expToLoc = document.getElementById("expToLoc").value;
-var locationQuery = "";
-var queryValue =  "";
-
-if(val == 1){
-	 locationQuery = document.getElementById("expFromLoc").value;
-	 queryValue = locationQuery;
-	 attachMapMyIndiaSearchBox(queryValue,val);
-}else if(val == 2){
-	 locationQuery = document.getElementById("expToLoc").value;
-	 queryValue = locationQuery;
-	 attachMapMyIndiaSearchBox(queryValue,val);	
-}
-
-}
- }
-
-function attachMapMyIndiaSearchBox(query,val){
-//alert("attachGoogleSearchBox");
-
-	if(query.length == 5 ){
-
-  j.ajax({
-				  url: "https://outpost.mapmyindia.com/api/security/oauth/token?grant_type=client_credentials",
-				  type: 'POST',
-				  contentType: 'application/x-www-form-urlencoded',
-				  crossDomain: true,
-				  data: jQuery.param({ 
-   						 client_id:"gHvaOPpCYTs20dVHSCo9i_zO5UNPDMDAro9HxE01tgY=",
-   						 client_secret: "c6M8QBqRa6daTwllDT86UmhOM4jFu5t6Nz6rLf8XLTU="
-    					
- 						 }),
-				success: function (response) {
-
-					//alert("in success");
-        			//alert(response.token_type);
-        			tokenType = response.token_type;
-        			accessToken = response.access_token;
-					getPlaceData(tokenType,accessToken,query,val);
-
-  						  },
-   				 error: function () {
-        			alert("error");
-    }
-			});
-}
-
-}
-
-function getPlaceData(tokenType,accessToken,queryValue,val){
-	//alert("tokenType,accessToken : "+tokenType + " " + accessToken);
-	var authorization = tokenType + " " + accessToken;
-	var tempurl = "https://cors-escape.herokuapp.com/https://atlas.mapmyindia.com/api/places/search/json?query="+queryValue+"&location=28.6321438802915%2C77.2173553802915";
-console.log("url :  "+tempurl);
-	console.log("authorization : "+authorization);
-
-
-var settings = {
-  "async": true,
-  "crossDomain": true,
-  "url": "https://cors-escape.herokuapp.com/https://atlas.mapmyindia.com/api/places/search/json?query="+queryValue+"&location=28.6321438802915%2C77.2173553802915",
-  "method": "GET",
-  "headers": {
-  "authorization": authorization,
-  "cache-control": "no-cache"
-  }
-}
-
-$.ajax(settings).done(function (response) {
-	setJSONDataLocationField(response,val);
-});
- 
-}
-
-function setJSONDataLocationField(jsondata,val){
-	//alert(JSON.stringify(jsondata));
- var div_data='';
-	 $.each(jsondata.suggestedLocations,function(i,obj){
-
-                div_data = div_data +"<a herf = '' id="+obj.latitude+"$"+obj.longitude+" value='"+obj.placeName+'-'+obj.placeAddress+"'>"+obj.placeName+'-'+obj.placeAddress+"</a>"
-
-
-                });  
-
-if(val == 1){
-  var my_list=document.getElementById("json-datalist");
-		my_list.innerHTML = div_data;
-		//alert("div_data : "+div_data);
-		 document.getElementById('json-datalist').style.display="";
-}else if(val == 2){
-	var my_list=document.getElementById("json-datalist1");
-		my_list.innerHTML = div_data;
-		document.getElementById('json-datalist1').style.display="";
-}
-
-if(val == 1){
- j("#json-datalist a").click(function(){
-     var value = j(this).text();
-     var id = j(this).attr('id');
-
-      fromLocationWayPoint = id;
-document.getElementById("expFromLoc").value = value;
- document.getElementById('json-datalist').style.display="none";
-       calulateUnitFromLoction();
-  });
-
-hideDropDownContents();
-
-}else if(val == 2){
-	j("#json-datalist1 a").click(function(){
-   
-     var value = j(this).text();
-     var id = j(this).attr('id');
-
-     toLocationWayPoint = id;
-	document.getElementById("expToLoc").value = value;
-	document.getElementById('json-datalist1').style.display="none";
-       calulateUnitFromLoction();
-
-  });
-	hideDropDownContents();
-
-	}
-      
-}
-
-function hideDropDownContents(){
-
-	 j("#expDate").click(function(){   
- j(".dropdown-content").hide();
-  });
-
-         j("#expToLoc").click(function(){   
- j(".dropdown-content").hide();   
-  });
-
-           j("#expFromLoc").click(function(){   
- j(".dropdown-content").hide();  
-  });
-}
-
- function calulateUnitFromLoction(){
-
-if(fromLocationWayPoint != '' && toLocationWayPoint != ''){
-if(fromLocationWayPoint.includes("$") && toLocationWayPoint.includes("$")){
-var fromLongLat = fromLocationWayPoint.split('$');
-var fromLat = fromLongLat[0];
-var fromLong = fromLongLat[1];
-
-var toLongLat = toLocationWayPoint.split('$');
-var toLat = toLongLat[0];
-var toLong = toLongLat[1];
-
-
-var settings = {
-  "async": true,
-  "crossDomain": true,
-  "url": "https://apis.mapmyindia.com/advancedmaps/v1/bemzvgf9d3at3j7rt85bpvmwuhaumd59/distance?center="+fromLat+","+fromLong+"&pts="+toLat+","+toLong+"",
-  "method": "GET",
-  "headers": {
-  "cache-control": "no-cache"
-  }
-}
-
-$.ajax(settings).done(function (response) {
-  wayPoint = document.getElementById("wayPointunitValue");
-   var data = {};
-	     data.start = {'lat': fromLat, 'lng':fromLong}
-	     data.end = {'lat': toLat, 'lng':toLong}
-	     var str = JSON.stringify(data);
-	   	 wayPoint.value=str;
-
-  		setUnitBasedOnResponse(response)
-});
-}else{
-	unitValue = document.getElementById("expUnit");
-	unitValue.value = 1;
- }
-}else{
-	unitValue = document.getElementById("expUnit");
-	unitValue.value = 1;
- }
-}
-
-function setUnitBasedOnResponse(response){
-	console.log(JSON.stringify(response));
-
-	 $.each(response.results,function(i,obj){
-	var units = obj.length;
-	var unitKM = parseInt(units)/1000;
- 	unitValue = document.getElementById("expUnit");
-	unitValue.value = unitKM;
-	 });
-	 returnUnitResult();
-}
-
-//************************************** MAPMYINDIA - END **********************************************//
 
 function viewMap(){
-	if(window.localStorage.getItem("MapProvider") == "GOOGLEMAP"){
 		document.getElementById("openModal").style.display="block";
 		fromLoc = document.getElementById("expFromLoc");
 		toLoc = document.getElementById("expToLoc");
@@ -2482,11 +2257,11 @@ function viewMap(){
 		if(fromLoc.value!='' && toLoc.value!=''){
 			calculateAndDisplayRoute();
 			document.getElementById("mapImage").setAttribute('disabled', false);
-			}
 		}
 	}	
 	
 function calculateAndDisplayRoute() {
+		//alert("calculateAndDisplayRoute")
 		var map;
 		var directionsDisplay;
 		var directionsService;
@@ -2581,7 +2356,6 @@ function returnUnitResult(){
 		var perUnitStatus = perUnitDetailsJSON.expRatePerUnit;
 		var fixedOrVariable = perUnitDetailsJSON.expFixedOrVariable;
 		var ratePerUnit = document.getElementById("ratePerUnit");
-
 		if (flagForUnitEnable == true){
 			unt = document.getElementById("expUnit");
 			amt = document.getElementById("expAmt");
@@ -2593,13 +2367,14 @@ function returnUnitResult(){
 function loadImage()
 {
 	//alert(window.localStorage.getItem("MobileMapRole"))
-
+	if(window.localStorage.getItem("MobileMapRole") == 'true')
+	{
 		document.getElementById("mapImage").style.display="";
 		//document.getElementById("mapLink").style.visibility = "hidden";
 		$("a").click(function () { 
 			$(this).fadeTo("fast").removeAttr("href"); 
 		});
-	
+	}
 }
 
 function resetUnit()
@@ -3129,7 +2904,6 @@ j.ajax({
 						successMessage = "Oops!! Something went wrong. Please contact system administrator.";
 						j('#mainHeader').load(headerBackBtn);
 					 	j('#mainContainer').load(pageRefFailure);
-					 	requestRunning = false;
 					 }
 					},
 				  error:function(data) {
