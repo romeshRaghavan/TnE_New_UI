@@ -2,9 +2,8 @@ var j = jQuery.noConflict();
 var defaultPagePath='app/pages/';
 var headerMsg = "Expenzing";
 //var urlPath = 'http://1.255.255.36:13130/TnEV1_0AWeb/WebService/Login/'
-//var WebServicePath ='http://1.255.255.184:8085/NexstepWebService/mobileLinkResolver.service';
-var WebServicePath = 'http://live.nexstepapps.com:8284/NexstepWebService/mobileLinkResolver.service';
-//var WebServicePath ='http://1.255.255.36:9898/NexstepWebService/mobileLinkResolver.service';
+var WebServicePath ='http://1.255.255.79:8086/NexstepWebService/mobileLinkResolver.service';
+//var WebServicePath = 'http://live.nexstepapps.com:8284/NexstepWebService/mobileLinkResolver.service';
 //var WebServicePath ='http://1.255.255.197:8082/NexstepWebService/mobileLinkResolver.service';
 var clickedFlagCar = false;
 var clickedFlagTicket = false;
@@ -133,8 +132,8 @@ function commanLogin(){
  	var domainName = userNameValue.split('@')[1];
 	 var jsonToDomainNameSend = new Object();
 	jsonToDomainNameSend["userName"] = domainName;
-	jsonToDomainNameSend["mobilePlatform"] = device.platform;
-	//jsonToDomainNameSend["mobilePlatform"] = "Android";
+	//jsonToDomainNameSend["mobilePlatform"] = device.platform;
+	jsonToDomainNameSend["mobilePlatform"] = "Android";
 	jsonToDomainNameSend["appType"] = "NEXGEN_EXPENZING_TNE_APP";
   	//var res=JSON.stringify(jsonToDomainNameSend);
 	var requestPath = WebServicePath;
@@ -149,6 +148,7 @@ function commanLogin(){
          	if (data.status == 'Success'){
          		urlPath = data.message;
          		setUrlPathLocalStorage(urlPath);
+				alert(urlPath);
          		login();
         	}else if(data.status == 'Failure'){
 				successMessage = data.message;
@@ -818,7 +818,6 @@ function validateExpenseDetails(exp_date,exp_from_loc,exp_to_loc,exp_narration,e
 	
 		return true;
 	}
-
 
 
 
@@ -1654,16 +1653,19 @@ function validateTSDetails(exp_date,exp_narration,exp_unit,exp_amt,travelRequest
 			return false;
 		}
 	if(exp_amt != ""){
-			if(isNumber_optionalDot(exp_amt,"Amount")==false)
+			if(isOnlyNumeric(exp_amt,"Amount")==false)
 			{
 				return false;
 			}
-			
+			if(isZero(exp_amt,"Amount")==false)
+			{
+				document.getElementById("expAmt").value="";
+				return false;
+			}
 		}else{
-            alert(window.lang.translate('Amount is invalid'));
+            alert(window.lang.translate('Amount is invalid.'));
 			return false;
 		}
-	
 	if(currency_id == "-1"){
         alert(window.lang.translate('Currency Name is invalid.'));
 		return false;
@@ -1971,13 +1973,13 @@ function oprationONTravelSettlementExp(){
             }
 	
 	function onPhotoDataSuccess(imageData) {
+
        resetImageData();
        if(voucherType == 'wallet'){
        	smallImageWallet.style.display = 'block'; 
         //document.getElementById('imageWallet').files[0] = "data:image/jpeg;base64," + imageData;
         document.getElementById('imageWallet').setAttribute('src', "data:image/jpeg;base64," + imageData);
 		smallImageWallet.src = "data:image/jpeg;base64," + imageData;
-
 		if(camerastatus=='1')
 		{
 		saveWalletAttachment(0);	
@@ -2139,15 +2141,6 @@ function hideTRIcons(){
 		document.getElementById('CategoryTrRoleID').style.display="block";		
 	}else{
 		document.getElementById('CategoryTrRoleID').style.display="none";
-	}
-}
-
-			
-function hideBusinessExpense(){
-	if(window.localStorage.getItem("mobileEC") == "true"){
-		document.getElementById('businessExpenseTab').style.display="block";		
-	}else{
-		document.getElementById('businessExpenseTab').style.display="none";
 	}
 }
 
