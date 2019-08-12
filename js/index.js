@@ -148,7 +148,6 @@ function commanLogin(){
          	if (data.status == 'Success'){
          		urlPath = data.message;
          		setUrlPathLocalStorage(urlPath);
-				alert(urlPath);
          		login();
         	}else if(data.status == 'Failure'){
 				successMessage = data.message;
