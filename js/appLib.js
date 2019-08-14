@@ -4022,11 +4022,6 @@
          document.getElementById("expUnit").value = jsonFindBEEditValues.units;
      }
 
- /*    if (document.getElementById("expUnit").value == 'undefined') {
-         document.getElementById("expUnit").value = "";
-         document.getElementById("expUnit").style.display = "none";
-     }*/
-
      document.getElementById("expAmt").value = jsonFindBEEditValues.amount;
 
      j("#expenseName").select2("val", jsonFindBEEditValues.expenseId);
