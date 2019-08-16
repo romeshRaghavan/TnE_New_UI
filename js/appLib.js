@@ -4043,7 +4043,9 @@
                smallImageBE.src =  jsonFindBEEditValues.imageAttach;
 
                if(fileTempCameraBE != "" && fileTempCameraBE != null){
+                   alert("json image :"+jsonFindBEEditValues.imageAttach);
                     updateAttachment =  jsonFindBEEditValues.imageAttach;
+                   alert("updateAttachment   :"+updateAttachment);
                     resetImageData();
                }else{
                     updateAttachment =  jsonFindBEEditValues.imageAttach;
@@ -4146,7 +4148,7 @@
          file = "";
      }
 
-  
+      alert("file :"+file);
       if (validateExpenseDetails(exp_date, exp_from_loc, exp_to_loc, exp_narration, exp_unit, exp_amt, acc_head_id, exp_name_id, currency_id, file)) {
 
      if (mydb) {

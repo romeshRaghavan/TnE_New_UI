@@ -5,7 +5,7 @@ var headerMsg = "Expenzing";
 //var WebServicePath ='http://1.255.255.99:8681/NexstepWebService/mobileLinkResolver.service';
 //var WebServicePath = 'http://live.nexstepapps.com:8284/NexstepWebService/mobileLinkResolver.service';
 //var WebServicePath ='http://1.255.255.95:8080/NexstepWebService/mobileLinkResolver.service';
-var WebServicePath = 'http://1.255.255.98:8083/NexstepWebService/mobileLinkResolver.service';
+var WebServicePath = 'http://1.255.255.99:8681/NexstepWebService/mobileLinkResolver.service';
 var clickedFlagCar = false;
 var clickedFlagTicket = false;
 var clickedFlagHotel = false;
@@ -2081,6 +2081,7 @@ function onPhotoDataSuccess(imageData) {
             saveWalletAttachment(0);
         }
     } else if (voucherType == 'BE') {
+        alert("imageData  :"+imageData);
         smallImageBE.style.display = 'block';
         fileTempCameraBE = "data:image/jpeg;base64," + imageData;
         smallImageBE.src = "data:image/jpeg;base64," + imageData;
@@ -2093,7 +2094,7 @@ function onPhotoDataSuccess(imageData) {
     }
 }
 
-function resetImageData() {
+function resetImageData() {alert("resetData");
     fileTempCameraBE = "";
     fileTempCameraTS = "";
     fileTempGalleryBE = "";
