@@ -2081,11 +2081,11 @@ function onPhotoDataSuccess(imageData) {
             saveWalletAttachment(0);
         }
     } else if (voucherType == 'BE') {
-        alert("imageData  :"+imageData);
         smallImageBE.style.display = 'block';
         fileTempCameraBE = "data:image/jpeg;base64," + imageData;
         smallImageBE.src = "data:image/jpeg;base64," + imageData;
         fileTempGalleryBE = "";
+        alert("onPhotoDataSuccess  BE");
     } else if (voucherType == 'TS') {
         smallImageTS.style.display = 'block';
         fileTempCameraTS = "data:image/jpeg;base64," + imageData;

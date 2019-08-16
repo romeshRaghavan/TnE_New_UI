@@ -4044,7 +4044,7 @@
 
                if(fileTempCameraBE != "" && fileTempCameraBE != null){
                     updateAttachment =  jsonFindBEEditValues.imageAttach;
-                   alert("updateAttachment   :"+updateAttachment)
+                   alert("setEditBEJSON :updateAttachment")
                     resetImageData();
                }else{
                    alert("else cam image");
