@@ -4127,29 +4127,31 @@
          file = fileTempCameraBE;
      }*/
 
-     if(updateAttachment != "" && updateAttachment != undefined){
+     if(updateAttachment != "" && updateAttachment != undefined){alert("1");
             file = updateAttachment;
-     }else{
-         if (fileTempGalleryBE == undefined || fileTempGalleryBE == "") {
+     }else{alert("else 2");
+         if (fileTempGalleryBE == undefined || fileTempGalleryBE == "") {alert("A1");
 
-         } else {
+         } else {alert("A2");
              file = fileTempGalleryBE;
          }
 
-         if (fileTempCameraBE == undefined || fileTempCameraBE == "") {
+         if (fileTempCameraBE == undefined || fileTempCameraBE == "") {alert("A3");
 
-         } else {
+         } else {alert("A4");
              file = fileTempCameraBE;
          }
 
      }
 
-       if (file == undefined) {
+       if (file == undefined) {alert("undefined");
          file = "";
      }
 
-      alert("file :"+file);
+    
       if (validateExpenseDetails(exp_date, exp_from_loc, exp_to_loc, exp_narration, exp_unit, exp_amt, acc_head_id, exp_name_id, currency_id, file)) {
+          
+          alert("file  before update :"+file);
 
      if (mydb) {
          mydb.transaction(function(t) {
@@ -4715,7 +4717,6 @@ console.log("amount : "+amount);
 
 function syncVoucherHeader(statusOfVoucher) {
     var jsonSentToSync = new Object();
-alert("statusOfVoucher :"+statusOfVoucher);
     jsonSentToSync["employeeId"] = window.localStorage.getItem("EmployeeId");
     jsonSentToSync["processId"] = "1";
     jsonSentToSync["vocherStatus"] = statusOfVoucher;
