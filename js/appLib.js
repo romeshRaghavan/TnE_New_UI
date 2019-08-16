@@ -4151,24 +4151,8 @@
 
      if (mydb) {
          mydb.transaction(function(t) {
-             alert("update inside");
-             alert("accHeadId  =" + acc_head_id)
-             alert("expNameId =" + exp_name_id)
-             alert("expDate =" + expDate)
-             alert("fromLocation =" + exp_from_loc)
-             alert("toLocation =" + exp_to_loc)
-             alert("expNarration =" + exp_narration)
-             alert("expUnit =" + exp_unit)
-             alert("expAmt =" + exp_amt)
-             alert("currencyId =" + currency_id)
-             alert("busExpDetailId =" + busExpDetailId)
-
              t.executeSql("UPDATE businessExpDetails set accHeadId ='" + acc_head_id + "', expNameId ='" + exp_name_id + "',expDate = '" + exp_date + "'   ,expFromLoc = '" + exp_from_loc + "'   ,expToLoc = '" + exp_to_loc + "'    ,expUnit = '" + exp_unit + "'   , expAmt = '" + exp_amt + "'   ,    expNarration = '" + exp_narration + "' ,currencyId = '" + currency_id + "' ,busExpAttachment = '" + file + "' where busExpId = " + busExpDetailId + ";");
          });
-
-         alert("Record update successfully");
-         alert("updateExit");
-
      } else {
          alert("db not found, your browser does not support web sql!");
      }
