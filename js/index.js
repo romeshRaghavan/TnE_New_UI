@@ -5,7 +5,7 @@ var headerMsg = "Expenzing";
 //var WebServicePath ='http://1.255.255.99:8681/NexstepWebService/mobileLinkResolver.service';
 //var WebServicePath = 'http://live.nexstepapps.com:8284/NexstepWebService/mobileLinkResolver.service';
 //var WebServicePath ='http://1.255.255.95:8080/NexstepWebService/mobileLinkResolver.service';
-var WebServicePath = 'http://1.255.255.98:8083/NexstepWebService/mobileLinkResolver.service';
+var WebServicePath = 'http://1.255.255.99:8681/NexstepWebService/mobileLinkResolver.service';
 var clickedFlagCar = false;
 var clickedFlagTicket = false;
 var clickedFlagHotel = false;
@@ -296,7 +296,7 @@ function isJsonString(str) {
     return true;
 }
 
-function viewBusinessExp() {
+function viewBusinessExp() {alert("viewBusinessExp");
 
     var pageRef = defaultPagePath + 'fairClaimTable.html';
     //var headerBackBtn=defaultPagePath+'headerPageForBEOperation.html';
@@ -2954,7 +2954,7 @@ function hideEAMenus() {
     }
 }
 
-function hideEmployeeAdvance() {
+function hideEmployeeAdvance() {alert("hideEmployeeAdvance");
     if (window.localStorage.getItem("EaInMobile") == "true") {
         fetchEmployeeAdvance();
         document.getElementById('helpimage').style.display = "";

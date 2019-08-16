@@ -2149,6 +2149,7 @@
                  }
              });
      });
+                                  alert("Exit select after Update");
      mytable.appendTo("#box");
 
      mainTable = j('<table></table>').attr({
@@ -4064,7 +4065,7 @@
      }
  }
 
- function updateBusinessDetails(busExpDetailId) {
+ function updateBusinessDetails(busExpDetailId) {alert("updatebusiness");
 
      var acc_head_id;
      var acc_head_val;
@@ -4150,7 +4151,8 @@
 
      if (mydb) {
          mydb.transaction(function(t) {
-             alert("accHeadId =" + acc_head_id)
+             alert("update inside");
+             alert("accHeadId  =" + acc_head_id)
              alert("expNameId =" + exp_name_id)
              alert("expDate =" + expDate)
              alert("fromLocation =" + exp_from_loc)
@@ -4165,6 +4167,7 @@
          });
 
          alert("Record update successfully");
+         alert("updateExit");
 
      } else {
          alert("db not found, your browser does not support web sql!");
