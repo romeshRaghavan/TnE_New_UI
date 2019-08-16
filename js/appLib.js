@@ -4105,10 +4105,12 @@
      var exp_to_loc = document.getElementById('expToLoc').value;
 
      var exp_narration = document.getElementById('expNarration').value;
+     alert("exp_narration "+exp_narration);
 
      var exp_unit = document.getElementById('expUnit').value;
 
      var exp_amt = document.getElementById('expAmt').value;
+     alert("exp_amt   :"+exp_amt);
 
 /*     if (fileTempGalleryBE == undefined || fileTempGalleryBE == "") {
      } else if(fileTempGalleryBE != ""){
