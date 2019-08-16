@@ -2071,6 +2071,7 @@ function loaded() {
 
 function onPhotoDataSuccess(imageData) {
     resetImageData();
+    resetUpdateImage();
     if (voucherType == 'wallet') {
         smallImageWallet.style.display = 'block';
         //document.getElementById('imageWallet').files[0] = "data:image/jpeg;base64," + imageData;
@@ -2085,7 +2086,6 @@ function onPhotoDataSuccess(imageData) {
         fileTempCameraBE = "data:image/jpeg;base64," + imageData;
         smallImageBE.src = "data:image/jpeg;base64," + imageData;
         fileTempGalleryBE = "";
-        alert("onPhotoDataSuccess  BE");
     } else if (voucherType == 'TS') {
         smallImageTS.style.display = 'block';
         fileTempCameraTS = "data:image/jpeg;base64," + imageData;
@@ -2094,7 +2094,7 @@ function onPhotoDataSuccess(imageData) {
     }
 }
 
-function resetImageData() {alert("resetData");
+function resetImageData() {
     fileTempCameraBE = "";
     fileTempCameraTS = "";
     fileTempGalleryBE = "";
