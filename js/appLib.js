@@ -4150,16 +4150,16 @@
 
      if (mydb) {
          mydb.transaction(function(t) {
-             console.log("accHeadId =" + acc_head_id)
-             console.log("expNameId =" + exp_name_id)
-             console.log("expDate =" + expDate)
-             console.log("fromLocation =" + exp_from_loc)
-             console.log("toLocation =" + exp_to_loc)
-             console.log("expNarration =" + exp_narration)
-             console.log("expUnit =" + exp_unit)
-             console.log("expAmt =" + exp_amt)
-             console.log("currencyId =" + currency_id)
-             console.log("busExpDetailId =" + busExpDetailId)
+             alert("accHeadId =" + acc_head_id)
+             alert("expNameId =" + exp_name_id)
+             alert("expDate =" + expDate)
+             alert("fromLocation =" + exp_from_loc)
+             alert("toLocation =" + exp_to_loc)
+             alert("expNarration =" + exp_narration)
+             alert("expUnit =" + exp_unit)
+             alert("expAmt =" + exp_amt)
+             alert("currencyId =" + currency_id)
+             alert("busExpDetailId =" + busExpDetailId)
 
              t.executeSql("UPDATE businessExpDetails set accHeadId ='" + acc_head_id + "', expNameId ='" + exp_name_id + "',expDate = '" + exp_date + "'   ,expFromLoc = '" + exp_from_loc + "'   ,expToLoc = '" + exp_to_loc + "'    ,expUnit = '" + exp_unit + "'   , expAmt = '" + exp_amt + "'   ,    expNarration = '" + exp_narration + "' ,currencyId = '" + currency_id + "' ,busExpAttachment = '" + file + "' where busExpId = " + busExpDetailId + ";");
          });
