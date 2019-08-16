@@ -1986,7 +1986,7 @@
 
  }
 
- function fetchEmployeeAdvance() {
+ function fetchEmployeeAdvance() {alert("fetchEmployeeAdvance");
 
      mytable = j('<table></table>').attr({
          id: "source",
@@ -2012,8 +2012,10 @@
                      for (var i = 0; i < result.rows.length; i++) {
 
                          var row = result.rows.item(i);
+                        
                          var shrinkFromTo;
                          var newDateFormat = reverseConvertDate(row.expDate.substring(0, 2)) + "-" + row.expDate.substring(3, 5) + " " + row.expDate.substring(6, 10);
+                         alert("newDateFormat  :"+newDateFormat);
 
                          if (window.localStorage.getItem("MobileMapRole") == 'true') {
                              if (row.expFromLoc != '' && row.expToLoc != '') {
@@ -2047,7 +2049,7 @@
                                  j('<td></td>').attr({
                                      class: ["expNarration"].join(' ')
                                  }).html('<p style="color: black;">' + row.expNarration + '</br>' + row.expFromLoc + "/" + row.expToLoc + '</P>').appendTo(rowss);
-                             } else {
+                             } else {alert("else :"+row.expNarration);
                                  j('<td></td>').attr({
                                      class: ["expNarration"].join(' ')
                                  }).html('<p style="color: black;">' + row.expNarration + '</br>' + row.expFromLoc + "" + row.expToLoc + '</P>').appendTo(rowss);
@@ -4076,7 +4078,6 @@
      var file;
 
      var busExpDetailId = busExpDetailId.value;
-
      if (j("#accountHead").select2('data') != null) {
          acc_head_id = j("#accountHead").select2('data').id;
          acc_head_val = j("#accountHead").select2('data').name;
@@ -4105,12 +4106,11 @@
      var exp_to_loc = document.getElementById('expToLoc').value;
 
      var exp_narration = document.getElementById('expNarration').value;
-     alert("exp_narration "+exp_narration);
 
      var exp_unit = document.getElementById('expUnit').value;
 
      var exp_amt = document.getElementById('expAmt').value;
-     alert("exp_amt   :"+exp_amt);
+      
 
 /*     if (fileTempGalleryBE == undefined || fileTempGalleryBE == "") {
      } else if(fileTempGalleryBE != ""){
