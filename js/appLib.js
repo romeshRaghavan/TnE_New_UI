@@ -4043,11 +4043,11 @@
                smallImageBE.src =  jsonFindBEEditValues.imageAttach;
 
                if(fileTempCameraBE != "" && fileTempCameraBE != null){
-                   alert("json image :"+jsonFindBEEditValues.imageAttach);
                     updateAttachment =  jsonFindBEEditValues.imageAttach;
-                   alert("updateAttachment   :"+updateAttachment);
+                   alert("updateAttachment   :"+updateAttachment)
                     resetImageData();
                }else{
+                   alert("else cam image");
                     updateAttachment =  jsonFindBEEditValues.imageAttach;
                     resetImageData();
                }
