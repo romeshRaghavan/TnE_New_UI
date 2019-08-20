@@ -5,7 +5,7 @@ var headerMsg = "Expenzing";
 //var WebServicePath ='http://1.255.255.99:8681/NexstepWebService/mobileLinkResolver.service';
 //var WebServicePath = 'http://live.nexstepapps.com:8284/NexstepWebService/mobileLinkResolver.service';
 //var WebServicePath ='http://1.255.255.95:8080/NexstepWebService/mobileLinkResolver.service';
-var WebServicePath = 'http://1.255.255.99:8681/NexstepWebService/mobileLinkResolver.service';
+var WebServicePath = 'http://1.255.255.98:8083/NexstepWebService/mobileLinkResolver.service';
 var clickedFlagCar = false;
 var clickedFlagTicket = false;
 var clickedFlagHotel = false;
@@ -37,7 +37,7 @@ var filtersStr = "";
 var fromLocationWayPoint = "";
 var toLocationWayPoint = "";
 var profileImg = "";
-var enableDivBasedOnStatus = "";  // For Past Voucher = 'V' and For my Approval = 'A'
+var enableDivBasedOnStatus = ""; // For Past Voucher = 'V' and For my Approval = 'A'
 var updateAttachment = ""; // For BE Edit
 
 j(document).ready(function() {
@@ -296,7 +296,7 @@ function isJsonString(str) {
     return true;
 }
 
-function viewBusinessExp() {alert("viewBusinessExp");
+function viewBusinessExp() {
 
     var pageRef = defaultPagePath + 'fairClaimTable.html';
     //var headerBackBtn=defaultPagePath+'headerPageForBEOperation.html';
@@ -2070,8 +2070,8 @@ function loaded() {
 }
 
 function onPhotoDataSuccess(imageData) {
-    resetImageData();
     resetUpdateImage();
+    resetImageData();
     if (voucherType == 'wallet') {
         smallImageWallet.style.display = 'block';
         //document.getElementById('imageWallet').files[0] = "data:image/jpeg;base64," + imageData;
@@ -2250,14 +2250,14 @@ function hideTRIcons() {
 }
 
 function hideBusinessExpense() {
-    if(document.getElementById('businessExpenseTab') != null){
-        if (window.localStorage.getItem("mobileEC") == "true" ) {
+    if (document.getElementById('businessExpenseTab') != null) {
+        if (window.localStorage.getItem("mobileEC") == "true") {
             document.getElementById('businessExpenseTab').style.display = "block";
         } else {
             document.getElementById('businessExpenseTab').style.display = "none";
         }
     }
-   
+
 }
 
 function hideTRMenus() {
@@ -2955,7 +2955,7 @@ function hideEAMenus() {
     }
 }
 
-function hideEmployeeAdvance() {alert("hideEmployeeAdvance");
+function hideEmployeeAdvance() {
     if (window.localStorage.getItem("EaInMobile") == "true") {
         fetchEmployeeAdvance();
         document.getElementById('helpimage').style.display = "";
@@ -3563,15 +3563,29 @@ function clearDivRequest() {
 //   ****************************************  Business Edit Page -- Start  ******************************** //
 
 function expPrimaryId() {
+//Neha
 
     if (j("#source tr.selected").hasClass("selected")) {
+        var rowCount = $("#source tr.selected").length;
+        if (rowCount > 1) {
+            alert(window.lang.translate('Select single expense line for edit.'));
+        } else {
+            j("#source tr.selected").each(function(index, row) {
+                getPrimaryExpenseId(j(this).find('td.expNameId').text());
+            });
+        }
+    } else {
+        alert(window.lang.translate('Tap and select expenses to edit.'));
+    }
+
+/*    if (j("#source tr.selected").hasClass("selected")) {
         j("#source tr.selected").each(function(index, row) {
 
             getPrimaryExpenseId(j(this).find('td.expNameId').text());
 
         });
 
-    }
+    }*/
 }
 
 function editBusiExpMain(expPrimaryId) {
@@ -3743,5 +3757,3 @@ function setPerUnitDetailsForEdit(transaction, results) {
 }
 
 //   ****************************************  Business Edit Page -- End  ******************************** //
-
-
