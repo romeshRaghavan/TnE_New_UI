@@ -4990,16 +4990,16 @@
                  }
 
                  if (expName.length > 15) {
-                     expName = expName.substr(0, 14) + "..";
+                     expName = expName.substr(0, 12) + "..";
                  }
 
-                 var expenseDate = getDateForDetailLine(detailArray.expDate);
+                 var expenseDateForDetail = getDateForDetailLine(detailArray.expDate);
                  console.log("expenseDate : "+expenseDate);
 
 
                      detailBody = "<tr>"+ "<td>" + expName + "</td>" 
-                                        + "<td>" + detailArray.expDate + "</td>" 
-                                        + "<td>" + detailArray.convertedAmt + ' <span>'+ detailArray.currencyName + "</span></td>"
+                                        + "<td>" + expenseDateForDetail + "</td>" 
+                                        + "<td>" + detailArray.convertedAmt + ' <h6 style=display:inline-block;>'+ detailArray.currencyName + "</h6></span></td>"
                                         + attachment
                                         + "<td  class='expDate displayNone'>"+expenseDate+ "</td>"    
                                         + "<td  class='toLocation displayNone'>"+detailArray.toLocation+"</td>"
@@ -5032,7 +5032,7 @@
     // converts date from dd-MMM-yyyy to dd/mm/yyyy
     var date = new Date(input);
 
-    return(date.getDate() + "/" + date.getMonth() + 1);
+    return( date.getMonth() + 1 + "/" +date.getDate());
 }
 
  function setHeaderToDetail(busExpHeaderId, voucherDetailArray, detailBodyLines) {
@@ -5169,7 +5169,7 @@
                     jsonUpdateBE["currencyId"] = j(this).find('td.currencyId').text();
                     jsonUpdateBE["perUnitException"] = j(this).find('td.isEntitlementExceeded').text();
 
-                    var dataURL = j(this).find('td.busAttachment').text();
+/*                    var dataURL = j(this).find('td.busAttachment').text();
                     var attachmentFileId = j(this).find('td.attachFileId').text();
 
                     //For IOS image save
@@ -5178,7 +5178,10 @@
                     //For Android image save
                     var data = dataURL.replace(/data:base64,/, '');
 
-                    jsonUpdateBE["imageAttach"] = data;
+                    jsonUpdateBE["imageAttach"] = data;*/
+
+                    jsonUpdateBE["attachFileId"] = j(this).find('td.attachFileId').text();
+
 
                     localStorage.setItem("jsonUpdateBE", JSON.stringify(jsonUpdateBE));
 
@@ -5507,20 +5510,42 @@ function rejectVoucher(){
 
      getPerUnitFromDBForEdit(jsonFindBEEditValues.expenseId);
 
-        if(jsonFindBEEditValues.imageAttach != "" && jsonFindBEEditValues.imageAttach != null)
-        {
-               smallImageBE.style.display = 'block';
-               smallImageBE.src =  jsonFindBEEditValues.imageAttach;
+    if(jsonFindBEEditValues.attachFileId != "" && jsonFindBEEditValues.attachFileId != null){
 
-               if(fileTempCameraBE != "" && fileTempCameraBE != null){
-                    updateAttachment =  jsonFindBEEditValues.imageAttach;
-                    resetImageData();
-               }else{
-                    updateAttachment =  jsonFindBEEditValues.imageAttach;
-                    resetImageData();
-               }
-        }
- 
+            setAttachOnLoadSB(jsonFindBEEditValues.attachFileId);
+    }
+
+ }
+
+function setAttachOnLoadSB(attachFileId) {
+
+     var jsonAttach = new Object();
+     jsonAttach["fileId"] = attachFileId;
+
+     j.ajax({
+         url: window.localStorage.getItem("urlPath") + "FetchAttachment",
+         type: 'POST',
+         dataType: 'json',
+         crossDomain: true,
+         data: JSON.stringify(jsonAttach),
+         success: function(data) {
+             if (data.Status == "Success") {
+
+               var attachmentData = data.attachmentData;
+
+               smallImageBE.style.display = 'block';
+               smallImageBE.src =  "data:image/png;base64," + attachmentData;
+               resetImageData();
+
+               requestRunning = false;
+             } else {
+                 requestRunning = false;
+             }
+         },
+         error: function(data) {
+             requestRunning = false;
+         }
+     });
  }
 
 function expPrimaryIdSB() {
