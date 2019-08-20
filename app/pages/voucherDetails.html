@@ -157,7 +157,7 @@
 }
 
 /* Modal Content (Image) */
-.modal-content {
+.modal-content-img{
   margin: auto;
   display: block;
   width: 80%;
@@ -182,15 +182,74 @@
   animation-duration: 0.6s;
 }
 
-  .modal-content {
+  .modal-content-img {
     width: 100%;
   }
 
-  .close {
+  .close-img {
     top: 55px;
     right: 15px;
     font-size: 30px;
 }
+
+
+.modal-footer {
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-align: center;
+    align-items: center;
+    -ms-flex-pack: end;
+    justify-content: center;
+    padding: 1rem;
+    border-top: 1px solid #dee2e6;
+    border-bottom-right-radius: .3rem;
+    border-bottom-left-radius: .3rem;
+}
+
+.modal-dialog {
+    margin: 1.75rem auto;
+}
+
+.modal-dialogsend {
+    margin: 1.75rem auto;
+    padding: 10%;
+}
+
+.modal-header {
+    background-color: #040404 !important;
+    border: 0;
+}
+
+.close {
+    right: 5px;
+    top: 6px;
+    width: 20px;
+}
+
+.modal-content {
+    background: #fff !important;
+}
+
+.modal-title {
+    margin: 0;
+    color: white;
+    font-weight: 600;
+    margin-left: 13px;
+}
+
+.modal-body {
+    position: relative;
+    padding-right: 4%;
+    padding-top: 8%;
+    padding-left: 4%;
+}
+
+.modal-backdrop {
+    position: initial;
+    background-color: transparent;
+}
+
+
     </style>
 <body>
 <div class="container-fluid" style="background-color: white;">
@@ -200,18 +259,41 @@
 
 
 <!-- The Modal -->
-<div id="myModal" class="modal">
-  <button type="button" class="close" data-dismiss="modal">&times;</button>
-  <img class="modal-content" id="img01" style="width: 80%;">
+<div id="myModalImg" class="modal">
+  <button type="button" class="close-img" data-dismiss="modal">&times;</button>
+  <img class="modal-content-img" id="img01" style="width: 80%;">
   <div id="caption"></div>
 </div>
+
+<!-- The Modal -->
+                <div class="modal fade" id="myModal">
+                        <div class="modal-dialogsend">
+                                <div class="modal-content">
+                                        <!-- Modal Header -->
+                                        <div class="modal-header">
+                                          <h4 class="modal-title">Send Back Comment</h4>
+                                          <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                        </div>
+                                
+                                        <!-- Modal body -->
+                                        <div class="modal-body">
+                                          <textarea style="width:100%;" rows = "6" maxlength = "250" id="sendBackComment"></textarea>
+                                        </div>
+                                
+                                        <!-- Modal footer -->
+                                        <div class="modal-footer">
+                                          <button type="button" style="justify-content: center;" class="btn btn-primary" data-dismiss="modal" onclick="rejectVoucher();">Save</button>
+                                        </div>
+                                </div>
+                        </div>
+                </div>
 
       
 </body>
 <script>
-var modal = document.getElementById("myModal");
+var modal = document.getElementById("myModalImg");
 // Get the <span> element that closes the modal
-var span = document.getElementsByClassName("close")[0];
+var span = document.getElementsByClassName("close-img")[0];
 
 // When the user clicks on <span> (x), close the modal
 span.onclick = function() { 
