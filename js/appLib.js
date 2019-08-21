@@ -65,16 +65,18 @@
              appPageHistory.pop();
              var len = appPageHistory.length;
              var pg = appPageHistory[len - 1];
-             if (pg == "app/pages/addAnExpense.html" || pg == "app/pages/addTravelSettlement.html") {
 
-                 j('#mainHeader').load(headerBackBtn);
-             } else if (pg == "app/pages/category.html") {
+             alert("pg : "+pg);
 
-                 j('#mainHeader').load(headerCatMsg);
-             }
-             if (!(pg == null)) {
-                 j('#mainContainer').load(pg);
-             }
+                 if (pg == "app/pages/addAnExpense.html" || pg == "app/pages/addTravelSettlement.html") {
+
+                     j('#mainHeader').load(headerBackBtn);
+                 } else if (pg == "app/pages/category.html") {
+                     j('#mainHeader').load(headerCatMsg);
+                 }
+                 if (!(pg == null)) {
+                     j('#mainContainer').load(pg);
+                 }
          }
      }
  }
@@ -2624,7 +2626,7 @@
                          j("#source tr").on("swipe", swipeHandler);
 
                          function swipeHandler(event) {
-                             alert("asd");
+                             //alert("asd");
                          }
                      });
 
@@ -4566,7 +4568,7 @@
  // *********************************  Travel Settelment Send For Appoval -- Start ******************************************//
  function tripDetails() {
      var travelRequestId = j("#travelRequestName").select2('data').id;
-     alert("travelRequestId : " + travelRequestId);
+     //alert("travelRequestId : " + travelRequestId);
      var jsonToPopulateTRDetails = new Object();
      jsonToPopulateTRDetails["TravelRequestId"] = travelRequestId;
      checkTRDetailsExist(travelRequestId, jsonToPopulateTRDetails);
@@ -4577,7 +4579,7 @@
          mydb.transaction(function(t) {
              t.executeSql("Select * from travelSettleExpDetails where travelRequestId = '" + travelRequestId + "'", [],
                  function(transaction, results) {
-                     alert("results.rows.length : " + results.rows.length);
+                     //alert("results.rows.length : " + results.rows.length);
                      var noOfRows = results.rows.length;
                      if (noOfRows == 0) {
                          populateTravelRequestDetailsAjax(jsonToPopulateTRDetails);
@@ -4594,7 +4596,7 @@
  }
 
  function populateTravelRequestDetailsAjax(jsonToPopulateTRDetails) {
-     alert("populateTravelRequestDetailsAjax :");
+     //alert("populateTravelRequestDetailsAjax :");
      var pageRefSuccess = defaultPagePath + 'success.html';
      var pageRefFailure = defaultPagePath + 'failure.html';
 
@@ -4623,7 +4625,7 @@
 
  function setTRdetailsForSettelment(travelDetailArray) {
 
-     alert("travel detail : " + JSON.stringify(travelDetailArray));
+     //alert("travel detail : " + JSON.stringify(travelDetailArray));
      mydb.transaction(function(t) {
          if (travelDetailArray != null && travelDetailArray.length > 0) {
              for (var i = 0; i < travelDetailArray.length; i++) {
@@ -4700,8 +4702,29 @@
  // ******************************** View Past Voucher / For My Approval Header -- Start *********************************************//
 
  function viewVoucherHeaders(statusOfVoucher) {
-     syncVoucherHeader(statusOfVoucher);
+
      enableDivBasedOnStatus = statusOfVoucher;
+
+     // For My Approval Header Page
+     if(statusOfVoucher == 'A'){                                    
+         var headerBackBtn = defaultPagePath + 'backbtnPage.html';
+         var pageRef = defaultPagePath + 'viewApproverVouchers.html';
+         appPageHistory.push(pageRef);
+        j('#mainHeader').load(headerBackBtn);
+        j('#mainContainer').load(pageRef);
+     }
+
+     //  My Expense Pages
+
+     if(statusOfVoucher == 'F' || statusOfVoucher == 'R' || statusOfVoucher == 'P' || statusOfVoucher == 'U'){
+         var headerBackBtn = defaultPagePath + 'backbtnPage.html';
+         var pageRef = defaultPagePath + 'viewApproverPastVouchers.html';
+         appPageHistory.push(pageRef);
+        j('#mainHeader').load(headerBackBtn);
+        j('#mainContainer').load(pageRef);
+     }
+
+
  }
 
  function syncVoucherHeader(statusOfVoucher) {
@@ -4792,33 +4815,39 @@
  function displayPastVoucherPage(statusOfVoucher) {
 
      if (statusOfVoucher == "SUCCESS_NO_DATA") {
-         resetImageData();
+/*         resetImageData();
          var headerBackBtn = defaultPagePath + 'backbtnPage.html';
          var pageRef = defaultPagePath + 'viewApproverPastVouchers.html';
+         appPageHistory.push(pageRef);*/
 
-         j(document).ready(function() {
+
+
+/*         j(document).ready(function() {
              j('#mainHeader').load(headerBackBtn);
-             j('#mainContainer').load(pageRef, function() {
+             j('#mainContainer').load(pageRef, function() {*/
               var data = "<div style='text-align: center;'>"
                          +"<p  style='text-align: center;'><img src = 'images/noVoucher1.png'></p>"
                          +"<h4><b style='color: darkgrey;'>No expense available.</b></h4>"
                          +"<div>";
               j("#voucherHeader").append(data);
-              appPageHistory.push(pageRef);
-            });
-         });
+            
+/*            });
+         });*/
 
      } else {
-         resetImageData();
+/*         resetImageData();
          var headerBackBtn = defaultPagePath + 'backbtnPage.html';
          var pageRef = defaultPagePath + 'viewApproverPastVouchers.html';
-         j(document).ready(function() {
+         appPageHistory.push(pageRef);*/
+
+         console.log("appPageHistory2 : "+appPageHistory);
+
+/*         j(document).ready(function() {
              j('#mainHeader').load(headerBackBtn);
-             j('#mainContainer').load(pageRef, function() {
-                appPageHistory.push(pageRef);
+             j('#mainContainer').load(pageRef, function() {*/
                 fetchViewForVouchersHeader();
-            });
-         });
+/*            });
+         });*/
 
      }
 
@@ -4828,33 +4857,32 @@
 
      if (statusOfVoucher == "SUCCESS_NO_DATA") {
         requestRunning = false;
-         resetImageData();
-         var headerBackBtn = defaultPagePath + 'backbtnPage.html';
-         var pageRef = defaultPagePath + 'viewApproverVouchers.html';
+
          j(document).ready(function() {
-             j('#mainHeader').load(headerBackBtn);
-             j('#mainContainer').load(pageRef, function() {
+/*             j('#mainHeader').load(headerBackBtn);
+             j('#mainContainer').load(pageRef, function() {*/
                var data = "<div style='text-align: center;'>"
                          +"<p  style='text-align: center;'><img src = 'images/noVoucher1.png'></p>"
                          +"<h4><b style='color: darkgrey;'>No expense available.</b></h4>"
                          +"<div>";
               j("#voucherHeader").append(data);
-              appPageHistory.push(pageRef);
-            });
+/*              appPageHistory.push(pageRef);
+            });*/
          });
 
      } else {
          requestRunning = false;
          resetImageData();
-         var headerBackBtn = defaultPagePath + 'backbtnPage.html';
+/*         var headerBackBtn = defaultPagePath + 'backbtnPage.html';
          var pageRef = defaultPagePath + 'viewApproverVouchers.html';
          j(document).ready(function() {
              j('#mainHeader').load(headerBackBtn);
-             j('#mainContainer').load(pageRef, function() {
-                         appPageHistory.push(pageRef);
+             j('#mainContainer').load(pageRef, function() {*/
+                         
                          fetchViewForVouchersHeader();
+/*                         appPageHistory.push(pageRef);
              });
-         });
+         });*/
 
      }
  }
@@ -4944,9 +4972,13 @@
 
  function setDetailsForHeader(busExpHeaderId, voucherDetailArray) {
 
+    var headerBackBtn = defaultPagePath + 'backbtnPage.html';
+    var pageRef = defaultPagePath + 'voucherDetails.html';
+    appPageHistory.push(pageRef);
+
+    console.log("setDetailsForHeader : "+appPageHistory);
+
     j(document).ready(function() {
-        var headerBackBtn = defaultPagePath + 'backbtnPage.html';
-        var pageRef = defaultPagePath + 'voucherDetails.html';
         j('#mainHeader').load(headerBackBtn);
         j('#mainContainer').load(pageRef, function() {
           fetchdetails(busExpHeaderId,voucherDetailArray);
@@ -4980,8 +5012,6 @@
                     }
 
                   var expenseDate = getExpenseDateFromSMS(detailArray.expDate);
-                  console.log("expenseDate : "+expenseDate);
-
 
                  if (detailArray.attachFileName != null && detailArray.attachFileName != "") {
                      attachment = "<td><i class='fa fa-paperclip' style='font-size:18px;color:#0f97b2;' onclick='fetchReceipt(" + detailArray.attachFileId + ")'></i></td>"
@@ -4994,8 +5024,6 @@
                  }
 
                  var expenseDateForDetail = getDateForDetailLine(detailArray.expDate);
-                 console.log("expenseDate : "+expenseDate);
-
 
                      detailBody = "<tr>"+ "<td>" + expName + "</td>" 
                                         + "<td>" + expenseDateForDetail + "</td>" 
@@ -5078,7 +5106,7 @@
                              j('#buttonsAttached').append(buttonValue);
                          }
                          if(enableDivBasedOnStatus == 'A'){
-                             buttonValue =  "<div class='col-md-12' style='text-align: center; padding-top: 20px;'>"
+                             buttonValue =  "<div class='col-md-12' style='text-align: center; padding-bottom: 20px;'>"
                                             +"<button type='submit' id = 'approveBtn' class='btn btn-primary' onclick='approveVoucher("+row.busExpHeaderId+")'>Approve</button>&nbsp;"
                                              +"<button type='button' id = 'RejectedBtn' class='btn btn-primary' data-toggle='modal' data-id="+row.busExpHeaderId+" data-target='#myModal'>Send Back</button>"
                                             +"</div>";
@@ -5590,7 +5618,7 @@ function getPrimaryExpenseIdSB(expMstId) {
  }
 
  function getPrimaryExpenseIdSBAndUpdate(busExpDetailId) {
-    alert("1 : "+busExpDetailId.value);
+    //alert("1 : "+busExpDetailId.value);
     var exp_name_id;
      if (j("#expenseName").select2('data') != null) {
          exp_name_id = j("#expenseName").select2('data').id;
@@ -5708,7 +5736,7 @@ function getPrimaryExpenseIdSB(expMstId) {
         var pageRefSuccess = defaultPagePath + 'success.html';
         var pageRefFailure = defaultPagePath + 'failure.html';
         //console.log("updateDetailLine : " + JSON.stringify(jsonBeDetail));
-        alert("3");
+        //alert("3");
 
         callUpdateDetailServiceForBESB(jsonBeDetail, pageRefSuccess, pageRefFailure);
       }
@@ -5719,7 +5747,7 @@ function getPrimaryExpenseIdSB(expMstId) {
  }
 
  function updateExpDetailLIne(jsonBeDetail, pageRefSuccess, pageRefFailure) {
-    alert("4");
+    //alert("4");
      //j('#loading_Cat').show();
      var headerBackBtn = defaultPagePath + 'backbtnPage.html';
     
@@ -5730,7 +5758,7 @@ function getPrimaryExpenseIdSB(expMstId) {
          crossDomain: true,
          data: JSON.stringify(jsonBeDetail),
          success: function(data) {
-            alert("5 : "+data.Status);
+            //alert("5 : "+data.Status);
              if (data.Status == "Success") {
                  if (data.hasOwnProperty('DelayStatus')) {
                      setDelayMessage(data, jsonToSaveBE, busExpDetailsArr);
