@@ -66,7 +66,6 @@
              var len = appPageHistory.length;
              var pg = appPageHistory[len - 1];
 
-             alert("pg : "+pg);
 
                  if (pg == "app/pages/addAnExpense.html" || pg == "app/pages/addTravelSettlement.html") {
 
@@ -4974,9 +4973,12 @@
 
     var headerBackBtn = defaultPagePath + 'backbtnPage.html';
     var pageRef = defaultPagePath + 'voucherDetails.html';
-    appPageHistory.push(pageRef);
-
+    
     console.log("setDetailsForHeader : "+appPageHistory);
+
+    if( !appPageHistory.includes('app/pages/voucherDetails.html')){
+            appPageHistory.push(pageRef);
+    }
 
     j(document).ready(function() {
         j('#mainHeader').load(headerBackBtn);
@@ -5177,9 +5179,11 @@
                     var jsonUpdateBE = new Object();
                     var expDate = j(this).find('td.expDate').text();
                     var expenseDate = expDate;
+
+                    jsonUpdateBE["busExpId"] = j(this).find('td.busExpId').text();
                     jsonUpdateBE["busExpDetailId"] = busExpDetailId;
                     jsonUpdateBE["expenseDate"] = expenseDate;
-
+                    
                     jsonUpdateBE["expenseId"] = expPrimaryId;
                     jsonUpdateBE["ExpenseName"] = j(this).find('td.expName').text();
                     jsonUpdateBE["fromLocation"] = j(this).find('td.fromLocation').text();
@@ -5510,6 +5514,8 @@ function rejectVoucher(){
 
      document.getElementById("expDate").value = jsonFindBEEditValues.expenseDate;
 
+     document.getElementById("busExpHedId").value = jsonFindBEEditValues.busExpId;
+
      document.getElementById("busExpDetailId").value = jsonFindBEEditValues.busExpDetailId;
 
       j("#accountHead").select2("val", jsonFindBEEditValues.accountHeadId);
@@ -5793,6 +5799,40 @@ function getPrimaryExpenseIdSB(expMstId) {
          }
      });
  }
+
+ function goBackSB(expHeaderId) {
+     var currentUser = getUserID();
+     var loginPath = defaultPagePath + 'loginPage.html';
+     var headerBackBtn = defaultPagePath + 'backbtnPage.html';
+     var headerCatMsg = defaultPagePath + 'categoryMsgPage.html';
+
+     if (currentUser == '') {
+         j('#mainContainer').load(loginPath);
+     } else {
+         //To check if the page that needs to be displayed is login page. So 'historylength-2'
+         var historylength = appPageHistory.length;
+         var goToPage = appPageHistory[historylength - 2];
+
+         if (goToPage !== null && goToPage == loginPath) {
+             return 0;
+         } else {
+             appPageHistory.pop();
+             var len = appPageHistory.length;
+             var pg = appPageHistory[len - 1];
+
+             //alert("new appPageHistory : "+appPageHistory);
+
+            j('#mainContainer').load(pg, function() {
+                     fetchViewForVoucherDetails(expHeaderId);
+            });
+                 
+            if (!(pg == null)) {
+                     j('#mainContainer').load(pg);
+            }
+         }
+     }
+ }
+
 
 
 
